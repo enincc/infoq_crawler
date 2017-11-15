@@ -64,7 +64,7 @@ def article_from_div(div):
     a.authors = pq(authors_list[0]).text()
     if len(authors_list) > 1:
         a.translators = pq(authors_list[1]).text()
-        
+
     a.time = e('.author').text().split(' 发布于', 1)[-1].strip()
     a.cover_url = e('img').attr('src')
     a.introduction = e('p:first-of-type').text()
