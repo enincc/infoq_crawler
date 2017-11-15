@@ -20,8 +20,8 @@ class Article(Model):
     """
     def __init__(self):
         self.title = ''
-        self.authors_list = []
-        self.translators_list = []
+        self.authors = ''
+        self.translators = ''
         self.time = ''
         self.cover_url = ''
         self.introduction = ''
@@ -59,9 +59,10 @@ def article_from_div(div):
     a = Article()
 
     a.title = e('h2').text()
-    a.authors_list = [pq(i).text() for i in pq(e('.authors-list .follow__what')[0])]
-    if len(e('.authors-list .follow__what')) > 1:
-        a.translators_list = [pq(i).text() for i in pq(e('.authors-list .follow__what')[1])]
+    authors_list = e('.authors-list .follow__what')
+    a.authors = pq(authors_list[0]).text()
+    if len(authors_list) > 1:
+        a.translators = pq(authors_list[1]).text()
     a.time = e('.author').text().split(' 发布于', 1)[-1].strip()
     a.cover_url = e('img').attr('src')
     a.introduction = e('p:first-of-type').text()
@@ -81,13 +82,17 @@ def articles_from_url(url):
     return articles
 
 
-def main():
-    pages = 4
-    for i in range(pages):
+def articles_from_pages(start_page=0, pages=5):
+    """
+    指定抓取的起始页和页数
+    """
+    articles = []
+    for i in range(start_page, start_page+pages):
         url = 'http://www.infoq.com/cn/articles/{}'.format(i*12)
-        articles = articles_from_url(url)
-        print('infoQ articles', articles)
+        articles += articles_from_url(url)
+    return articles
 
 
 if __name__ == '__main__':
-    main()
+    print('infoQ articles', articles_from_pages(0, 1))
+
