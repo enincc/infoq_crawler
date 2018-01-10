@@ -1,5 +1,7 @@
 # infoq_crawler
 infoQ 文章区爬虫，批量抓取 infoQ 文章相关信息并发布到我的个人社区。
+## 演示
+![演示图片](https://github.com/enincc/infoq_crawler/blob/master/crawler.gif)
 ## crawler.py
 爬虫模块，依赖 PyQuery 和 Requests 2个模块。支持缓存，节省了二次抓取的时间。
 ## post.py
